@@ -1,4 +1,4 @@
-# Skrypt FiveM (ESX): Wezwanie na kanał Poczekalani!
+# Skrypt FiveM (ESX): Wezwanie na kanał Poczekalanie!
 
 ## Opis
 
