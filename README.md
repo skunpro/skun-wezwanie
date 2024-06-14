@@ -1,5 +1,7 @@
 # Skrypt FiveM (ESX): Wezwanie na kanał Poczekalanie!
 
+### Wyświetlić podgląd(https://gsds.dsa)
+
 ## Opis
 
 Skrypt umożliwia administratorom serwera FiveM wysyłanie powiadomień do graczy za pomocą komendy `/wezwij`. Po użyciu tej komendy, gracz otrzymuje powiadomienie na ekranie oraz informację przez webhook Discord, jeśli posiada ustawione Discord ID.
