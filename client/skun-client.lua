@@ -1,6 +1,6 @@
 ESX = exports["es_extended"]:getSharedObject()
 
-RegisterCommand('skun-wezwanie', function(source, args, rawCommand)
+RegisterCommand('wezwij', function(source, args, rawCommand)
     local xPlayer = ESX.GetPlayerFromId(source)
 
     local allowedRoles = {'support', 'mod', 'admin', 'superadmin', 'best'} -- Dodaj tutaj swoje dozwolone role
