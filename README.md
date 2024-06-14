@@ -1,4 +1,4 @@
-# Skrypt FiveM: Wezwanie na kanał Poczeklani!
+# Skrypt FiveM: Wezwanie na kanał Poczekalani!
 
 ## Opis
 
