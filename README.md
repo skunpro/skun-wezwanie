@@ -1,8 +1,8 @@
 # Skrypt FiveM (ESX): Wezwanie na kanał Poczekalanie!
 
 <p align="center">
-    <a href="https://i.imgur.com/emLeDSL.png" target="_blank">
-        <img src="https://i.imgur.com/emLeDSL.png" alt="PREVIEW" width="200" height="auto" />
+    <a href="https://i.imgur.com/7gvkWGh.png" target="_blank">
+        <img src="https://i.imgur.com/7gvkWGh.png" alt="PREVIEW" width="400" height="auto" />
     </a>
 </p>
 
