@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Powiadomienie</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        #notification {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 24px;
+            text-align: center;
+            display: none;
+        }
+
+        #freeze-info {
+            position: fixed;
+            top: 43%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 0, 0, 0.7);
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 16px;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="notification"></div>
+    <div id="freeze-info">Jesteś zfreezowany. Nie możesz się poruszać.</div>
+    <script>
+        window.addEventListener('message', function (event) {
+            if (event.data.type === "on") {
+                document.getElementById('notification').style.display = "block";
+                document.getElementById('notification').innerText = event.data.text;
+            } else if (event.data.type === "off") {
+                document.getElementById('notification').style.display = "none";
+            } else if (event.data.type === "freeze") {
+                document.getElementById('freeze-info').style.display = "block";
+            } else if (event.data.type === "unfreeze") {
+                document.getElementById('freeze-info').style.display = "none";
+            }
+        });
+    </script>
+</body>
+
+</html>
