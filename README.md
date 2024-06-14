@@ -9,6 +9,7 @@ Skrypt umożliwia administratorom serwera FiveM wysyłanie powiadomień do gracz
 - Zasób `es_extended` lub inny framework, który umożliwia zarządzanie graczami i ich uprawnieniami.
 - Dostęp do bazy danych MySQL, w której przechowywane są identyfikatory graczy oraz ich Discord ID.
 - Dostęp do panelu administracyjnego Discord, aby utworzyć webhook do wysyłania powiadomień.
+- Żeby skrypt działał potrzebujesz `es_extended` oraz `mysql-async`
 
 ## Instalacja
 
@@ -24,10 +25,6 @@ Skrypt umożliwia administratorom serwera FiveM wysyłanie powiadomień do gracz
 
 1. W grze użyj komendy `/wezwij <ID_gracza>`, aby wysłać powiadomienie do wybranego gracza.
 2. Gracz otrzyma powiadomienie na ekranie w grze oraz wiadomość przez webhook Discord.
-
-## Potrzebne Skrypty
-
-- Żeby skrypt działał potrzebujesz `es_extended` oraz `mysql-async`
 
 ## Autor
 
