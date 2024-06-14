@@ -17,9 +17,8 @@ Skrypt umożliwia administratorom serwera FiveM wysyłanie powiadomień do gracz
 
 ## Konfiguracja
 
-### Konfiguracja Webhook
-
-- Szukasz linijki takiej jak `local webhookUrl = 'TWOJ_URL_WEBHOOKA_DISCORD'`, następnie wklejasz tutaj swój link do Webhooka!
+- Szukasz linijki takiej jak `local webhookUrl = 'TWOJ_WEBHOOK_KANALU_WEZWANIA'`, następnie wklejasz tutaj swój link do Webhooka!
+- Następnie w `local message = '<@' .. discordId .. '> - Zostałeś wezwany na kanał <#ID_TWOJEGO_KANALU_POCZEKALNIA>, masz 2 minuty aby wejść.'` zmieniasz to `<#ID_TWOJEGO_KANALU_POCZEKALNIA>`
 
 ## Użycie
 
