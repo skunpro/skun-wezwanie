@@ -25,6 +25,10 @@ Skrypt umożliwia administratorom serwera FiveM wysyłanie powiadomień do gracz
 1. W grze użyj komendy `/wezwij <ID_gracza>`, aby wysłać powiadomienie do wybranego gracza.
 2. Gracz otrzyma powiadomienie na ekranie w grze oraz wiadomość przez webhook Discord.
 
+## Potrzebne Skrypty
+
+- Żeby skrypt działał potrzebujesz `es_extended` oraz `mysql-async`
+
 ## Autor
 
 - Autor: notaskun / https://skun.pro/
