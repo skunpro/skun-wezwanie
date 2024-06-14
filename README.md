@@ -3,7 +3,9 @@
 ### Preview
 
 <p align="center">
-    <img src="https://i.imgur.com/emLeDSL.png" style="border-radius: 15px; width: 200px; height: auto;" />
+    <a href="https://i.imgur.com/emLeDSL.png" target="_blank">
+        <img src="https://i.imgur.com/emLeDSL.png" alt="PREVIEW" width="200" height="auto" />
+    </a>
 </p>
 
 ## Opis
