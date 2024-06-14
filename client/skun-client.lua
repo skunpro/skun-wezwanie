@@ -1,71 +1,17 @@
-ESX = exports["es_extended"]:getSharedObject()
-
-RegisterCommand('wezwij', function(source, args, rawCommand)
-    local xPlayer = ESX.GetPlayerFromId(source)
-
-    local allowedRoles = {'support', 'mod', 'admin', 'superadmin', 'best'} -- Dodaj tutaj swoje dozwolone role
-
-    local hasPermission = false
-    for _, role in ipairs(allowedRoles) do
-        if xPlayer.getGroup() == role then
-            hasPermission = true
-            break
-        end
-    end
-
-    if not hasPermission then
-        TriggerClientEvent('esx:showNotification', source, 'Nie masz uprawnień do użycia tej komendy.')
-        return
-    end
-
-    local targetId = tonumber(args[1])
-
-    if targetId then
-        local targetPlayer = ESX.GetPlayerFromId(targetId)
-        if targetPlayer then
-            MySQL.Async.fetchScalar('SELECT discordId FROM users WHERE identifier = @identifier', {
-                ['@identifier'] = targetPlayer.identifier
-            }, function(discordId)
-                if discordId then
-                    TriggerClientEvent('skun-wezwanie:freezePlayer', targetId, true)
-                    TriggerClientEvent('skun-wezwanie:showNotification', targetId,
-                        'Zostałeś wezwany na kanał pomocy, masz 2 minuty aby dołączyć.')
-                    TriggerClientEvent('esx:showNotification', source,
-                        'Gracz z ID ' .. targetId .. ' został wezwany i zfreezowany.')
-
-                    local webhookUrl = 'TWOJ_URL_WEBHOOKA_DISCORD' -- zmień to na swoj
-                    local message = '<@' .. discordId .. '> - Zostałeś wezwany na kanał <#1230604422892224615>, masz 2 minuty aby wejść.'
-
-                    PerformHttpRequest(webhookUrl, function(statusCode, text, headers)
-                    end, 'POST', json.encode({
-                        content = message
-                    }), {
-                        ['Content-Type'] = 'application/json'
-                    })
-
-                    SetTimeout(30000, function() -- 30 sekund możesz se zmienić
-                        TriggerClientEvent('skun-wezwanie:freezePlayer', targetId, false)
-                    end)
-                else
-                    TriggerClientEvent('esx:showNotification', source, 'Gracz nie ma ustawionego Discord ID.')
-                end
-            end)
-        else
-            TriggerClientEvent('esx:showNotification', source, 'Gracz o takim ID nie istnieje.')
-        end
-    else
-        TriggerClientEvent('esx:showNotification', source, 'Podaj prawidłowe ID gracza.')
-    end
-end, false)
+local isFrozen = false
 
 RegisterNetEvent('skun-wezwanie:freezePlayer')
-AddEventHandler('skun-wezwanie:freezePlayer', function(targetId, freeze)
+AddEventHandler('skun-wezwanie:freezePlayer', function(freeze)
+    isFrozen = freeze
     if freeze then
-        freezedPlayers[targetId] = true
-        TriggerClientEvent('skun-wezwanie:toggleFreeze', targetId, true)
+        SetEntityCoords(PlayerPedId(), GetEntityCoords(PlayerPedId()))
+        FreezeEntityPosition(PlayerPedId(), true)
+        DisplayRadar(false)
+        TriggerEvent('skun-wezwanie:showFreezeMessage', 'Aktualnie nie możesz się ruszać!')
     else
-        freezedPlayers[targetId] = nil
-        TriggerClientEvent('skun-wezwanie:toggleFreeze', targetId, false)
+        FreezeEntityPosition(PlayerPedId(), false)
+        DisplayRadar(true)
+        TriggerEvent('skun-wezwanie:showFreezeMessage', 'Już możesz się ruszać!')
     end
 end)
 
@@ -76,9 +22,42 @@ AddEventHandler('skun-wezwanie:showNotification', function(notificationText)
         display = true,
         text = notificationText
     })
-    SetTimeout(30000, function() -- 30 sekund możesz se zmienić
+
+        -- Usunięcie komunikatu po 30 sekundach
+    SetTimeout(30000, function()
         SendNUIMessage({
             type = "off"
         })
     end)
+end)
+
+RegisterNetEvent('skun-wezwanie:showFreezeMessage')
+AddEventHandler('skun-wezwanie:showFreezeMessage', function(message)
+    SendNUIMessage({
+        type = "freezeMessage",
+        display = true,
+        text = message
+    })
+
+        -- Usunięcie komunikatu po 30 sekundach
+    SetTimeout(30000, function()
+        TriggerEvent('skun-wezwanie:hideFreezeMessage')
+    end)
+end)
+
+RegisterNetEvent('skun-wezwanie:hideFreezeMessage')
+AddEventHandler('skun-wezwanie:hideFreezeMessage', function()
+    SendNUIMessage({
+        type = "freezeMessage",
+        display = false
+    })
+end)
+
+Citizen.CreateThread(function()
+    while true do
+        Citizen.Wait(0)
+        if isFrozen then
+            DisableAllControlActions(0)
+        end
+    end
 end)
