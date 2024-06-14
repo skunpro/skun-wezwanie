@@ -34,8 +34,7 @@ RegisterCommand('skun-wezwanie', function(source, args, rawCommand)
                         'Gracz z ID ' .. targetId .. ' został wezwany i zfreezowany.')
 
                     local webhookUrl = 'TWOJ_URL_WEBHOOKA_DISCORD' -- zmień to na swoj
-                    local message = '<@' .. discordId ..
-                                        '> - Zostałeś wezwany na kanał <#1230604422892224615>, masz 2 minuty aby wejść.'
+                    local message = '<@' .. discordId .. '> - Zostałeś wezwany na kanał <#1230604422892224615>, masz 2 minuty aby wejść.'
 
                     PerformHttpRequest(webhookUrl, function(statusCode, text, headers)
                     end, 'POST', json.encode({
