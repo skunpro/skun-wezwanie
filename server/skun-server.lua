@@ -4,7 +4,7 @@ RegisterCommand('wezwij', function(source, args, rawCommand)
     local xPlayer = ESX.GetPlayerFromId(source)
 
     if xPlayer then
-        local allowedRoles = {'support', 'mod', 'admin', 'superadmin', 'best'} -- dodaj tutaj swoje groupy
+        local allowedRoles = {'support', 'mod', 'admin', 'superadmin', 'best'} -- Dodaj tutaj swoje dozwolone role
         local hasPermission = false
 
         for _, role in ipairs(allowedRoles) do
@@ -25,13 +25,15 @@ RegisterCommand('wezwij', function(source, args, rawCommand)
             local targetPlayer = ESX.GetPlayerFromId(targetId)
 
             if targetPlayer then
-                MySQL.Async.fetchScalar('SELECT discordId FROM users WHERE identifier = @identifier', { -- ustaw tutaj pod swoją baze bo ja mam tak ale idk jak każdy
+                MySQL.Async.fetchScalar('SELECT discordId FROM users WHERE identifier = @identifier', {
                     ['@identifier'] = targetPlayer.identifier
                 }, function(discordId)
                     if discordId then
                         TriggerClientEvent('skun-wezwanie:freezePlayer', targetId, true)
-                        TriggerClientEvent('skun-wezwanie:showNotification', targetId, 'Zostałeś wezwany na kanał pomocy, masz 2 minuty aby dołączyć.')
-                        TriggerClientEvent('esx:showNotification', source, 'Gracz z ID ' .. targetId .. ' został wezwany i zfreezowany.')
+                        TriggerClientEvent('skun-wezwanie:showNotification', targetId,
+                            'Zostałeś wezwany na kanał pomocy, masz 2 minuty aby dołączyć.')
+                        TriggerClientEvent('esx:showNotification', source,
+                            'Gracz z ID ' .. targetId .. ' został wezwany i zfreezowany.')
 
                         local webhookUrl = 'TWOJ_WEBHOOK_KANALU_WEZWANIA' -- zmień to na swoj
                         local message = '<@' .. discordId .. '> - Zostałeś wezwany na kanał <#ID_TWOJEGO_KANALU_POCZEKALNIA>, masz 2 minuty aby wejść.'
@@ -55,5 +57,8 @@ RegisterCommand('wezwij', function(source, args, rawCommand)
             end
         else
             TriggerClientEvent('esx:showNotification', source, 'Podaj prawidłowe ID gracza.')
+        end
+    else
+        TriggerClientEvent('esx:showNotification', source, 'Nie jesteś zalogowany.')
     end
 end, false)
