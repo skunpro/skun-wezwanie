@@ -1,8 +1,8 @@
 # Skrypt FiveM (ESX): Wezwanie na kanał Poczekalania!
 
-## Latest
+## Zmiany
 
-[v1.0.1](https://github.com/skunpro/skun-wezwanie/releases/tag/v1.0.1)
+[v1.0.1](https://github.com/skunpro/skun-wezwanie/releases/tag/v1.0.1) - Ostatnie
 
 ## Opis
 
