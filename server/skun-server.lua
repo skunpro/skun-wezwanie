@@ -25,33 +25,31 @@ RegisterCommand('wezwij', function(source, args, rawCommand)
             local targetPlayer = ESX.GetPlayerFromId(targetId)
 
             if targetPlayer then
-                MySQL.Async.fetchScalar('SELECT discordId FROM users WHERE identifier = @identifier', {
-                    ['@identifier'] = targetPlayer.identifier
-                }, function(discordId)
-                    if discordId then
-                        TriggerClientEvent('skun-wezwanie:freezePlayer', targetId, true)
-                        TriggerClientEvent('skun-wezwanie:showNotification', targetId,
-                            'Zostałeś wezwany na kanał pomocy, masz 2 minuty aby dołączyć.')
-                        TriggerClientEvent('esx:showNotification', source,
-                            'Gracz z ID ' .. targetId .. ' został wezwany i zfreezowany.')
+                local discordId = GetPlayerIdentifierByType(targetId, "discord")
+                
+                if discordId then
+                    discordId = discordId:gsub("discord:", "")
+                    
+                    TriggerClientEvent('skun-wezwanie:freezePlayer', targetId, true)
+                    TriggerClientEvent('skun-wezwanie:showNotification', targetId, 'Zostałeś wezwany na kanał pomocy, masz 2 minuty aby dołączyć.')
+                    TriggerClientEvent('esx:showNotification', source, 'Gracz z ID ' .. targetId .. ' został wezwany i zfreezowany.')
 
-                        local webhookUrl = 'TWOJ_WEBHOOK_KANALU_WEZWANIA' -- zmień to na swoj
-                        local message = '<@' .. discordId .. '> - Zostałeś wezwany na kanał <#ID_TWOJEGO_KANALU_POCZEKALNIA>, masz 2 minuty aby wejść.'
+                    local webhookUrl = 'TWOJ_WEBHOOK_KANALU_WEZWANIA' -- zmień to na swoj
+                    local message = '<@' .. discordId .. '> - Zostałeś wezwany na kanał <#ID_TWOJEGO_KANALU_POCZEKALNIA>, masz 2 minuty aby wejść.'
 
-                        PerformHttpRequest(webhookUrl, function(statusCode, text, headers)
-                        end, 'POST', json.encode({
-                            content = message
-                        }), {
-                            ['Content-Type'] = 'application/json'
-                        })
+                    PerformHttpRequest(webhookUrl, function(statusCode, text, headers)
+                    end, 'POST', json.encode({
+                        content = message
+                    }), {
+                        ['Content-Type'] = 'application/json'
+                    })
 
-                        SetTimeout(30000, function()
-                            TriggerClientEvent('skun-wezwanie:freezePlayer', targetId, false)
-                        end)
-                    else
-                        TriggerClientEvent('esx:showNotification', source, 'Gracz nie ma ustawionego Discord ID.')
-                    end
-                end)
+                    SetTimeout(30000, function()
+                        TriggerClientEvent('skun-wezwanie:freezePlayer', targetId, false)
+                    end)
+                else
+                    TriggerClientEvent('esx:showNotification', source, 'Gracz nie ma ustawionego Discord ID.')
+                end
             else
                 TriggerClientEvent('esx:showNotification', source, 'Gracz o takim ID nie istnieje.')
             end
