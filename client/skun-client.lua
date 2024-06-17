@@ -55,9 +55,13 @@ end)
 
 Citizen.CreateThread(function()
     while true do
-        Citizen.Wait(0)
+        local sleep = 0
+
         if isFrozen then
             DisableAllControlActions(0)
+        else
+            sleep = 1000
         end
+        Citizen.Wait(sleep)
     end
 end)
