@@ -3,22 +3,16 @@ game 'gta5'
 lua54 'yes'
 
 author 'notaskun - https://skun.pro'
-description 'Command /wezwij [ID] / default ui'
+description 'Command /wezwij [ID] [REASON] / txadmin warning'
 
-version '1.0.1'
+version '2.0.0'
 
 client_scripts {
-    'client/skun-client.lua'
+    'client/main.lua'
 }
 
 server_scripts {
-    'server/skun-server.lua'
-}
-
-ui_page 'web/index.html'
-
-files {
-    'web/index.html'
+    'server/main.lua'
 }
 
 shared_script '@es_extended/imports.lua'
